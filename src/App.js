@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./componets/Header";
+import { Fragment, useState } from "react";
+import Formulario from "./componets/Formulario";
+import Mensaje from "./componets/Mensaje";
+import Resultado from "./componets/Resultado";
 
 function App() {
+  const [cantidad, guardarCantidad] = useState(0);
+  const [plazo, guardarPlazo] = useState('');
+  const [total, guardarTotal] = useState(0);
+
+  let componente;
+  if (total === 0) {
+    componente = <Mensaje />
+  } else {
+    componente = <Resultado  
+    total={total}
+    plazo={plazo}
+    cantidad={cantidad}/>
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Header
+        titulo="Cotizador de prestamos"
+
+      />
+      <div className="container">
+        <Formulario
+          //Pasar las props desde el padre
+          cantidad={cantidad}
+          guardarCantidad={guardarCantidad}
+          plazo={plazo}
+          guardarPlazo={guardarPlazo}
+          total={total}
+          guardarTotal={guardarTotal}
+        />
+        <div className="mensajes">
+         {componente}
+        </div>
+      </div>
+    </Fragment>
   );
 }
 
